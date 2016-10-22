@@ -1,0 +1,25 @@
+{
+  "name": "platform-game",
+  "version": "0.1.0",
+  "private": true,
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-sass": "^2.3.2",
+    "react-scripts": "0.6.1"
+  },
+  "dependencies": {
+    "konva": "^1.2.2",
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "react-keydown": "^1.6.2",
+    "react-konva": "^1.0.6"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "build-css": "gulp sass",
+    "watch-css": "gulp watch-sass"
+  }
+}
