@@ -12,22 +12,16 @@ class Cloud extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        let newX = this.state.x;
+        let newX = this.state.x + nextProps.offsetX;
         let newY = this.state.y;
-        let positionLimits = {
-            x: [0 - Consts.CLOUD_DIMENSIONS.width, this.props.stageDimensions.width]
-        };
+        let positionLimits = [0 - Consts.CLOUD_DIMENSIONS.width, this.props.stageDimensions.width];
 
-        switch(nextProps.direction) {
-            case Consts.DIRECTIONS.right:
-                newX -= nextProps.moveX;
-                if(newX <= positionLimits.x[0]) {
-                    newX = this.props.stageDimensions.width;
-                }
-            break;
-
-            default:
-            break;
+        if(newX <= positionLimits[0]) {
+            newX = this.props.stageDimensions.width;
+            newY = this.state.y + Math.floor((Math.random() * 20)) - 10;
+        } else if(newX >= positionLimits[1]) {
+            newX = positionLimits[0];
+            newY = this.state.y + Math.floor((Math.random() * 20)) - 10;
         }
 
         this.setState({
