@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Rect, Layer} from 'react-konva';
 import Consts from '../data/consts';
+import TilesAPI from '../api/TilesAPI';
 import Tile from './Tile';
 
 class TilesLayer extends Component {
@@ -58,21 +59,16 @@ class TilesLayer extends Component {
 			};
 		});
 
-		if(sessionStorage.getItem('vectorLock') === 'false') {
-			sessionStorage.setItem('lastVector', JSON.stringify({
-				actualY: pathArray[pathArray.length-1].actualY,
-				vectorTTL: 0,
-				vectorDirection: '' 
-			}));
-			sessionStorage.setItem('pathArray', JSON.stringify(pathArray));
-			sessionStorage.setItem('vectorLock', true);
+		if(TilesAPI.getTilesDataLock() === false) {
+			TilesAPI.setTilesData(pathArray);
+			TilesAPI.setTilesDataLock(true);
 		}
 
 		return generatorArray.map((posX, element) => {
 			return(
 				<Tile 
-					defaultX={posX} 
-					defaultY={pathArray[element].actualY} 
+					x={posX} 
+					y={pathArray[element].actualY} 
 					stageDimensions={Consts.STAGE_DIMENSIONS} 
 					key={posX} 
 					pathArrayId={element}
