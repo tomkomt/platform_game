@@ -20,16 +20,16 @@ const CONSTS = {
     },
     PLAYER_DIMENSIONS: {
         height: 60,
-        width: 50
+        width: 45
     },
     CLOUD_PARALAX: {
 	    leftRight: 0.25
     },
     TILE_PARALAX: {
-        leftRight: 1.5
+        leftRight: 2.5
     },
     PLAYER_PARALAX: {
-        leftRight: 1.5
+        leftRight: 2.5
     },
     TILE_CONSTS: {
         defaultY: 550,
@@ -38,8 +38,8 @@ const CONSTS = {
         minY: 400
     },
     PLAYER_CONSTS: {
-        defaultX: 50
+        defaultX: 55
     } 
 };
 
-export default CONSTS;
+module.exports = CONSTS;
