@@ -6,10 +6,13 @@ import Tile from './Tile';
 class TilesLayer extends Component {
 	constructor(props) {
 		super(props);
+		this.state = {
+			offsetX: 0
+		}
 	}
 
 	arrayGenerator() {
-		return Array.from({ length: 1 + (() => { return 30; })()}, (v,k) => k * Consts.TILE_DIMENSIONS.width);
+		return Array.from({ length: 1 + (() => { return Consts.TILE_CONSTS.tilesCount; })()}, (v,k) => k * Consts.TILE_DIMENSIONS.width);
 	}
 
 	tilesGenerator() {
@@ -43,7 +46,6 @@ class TilesLayer extends Component {
 					}
 				break;
                 
-
 				default:
 				break;
 			}
@@ -71,8 +73,6 @@ class TilesLayer extends Component {
 				<Tile 
 					defaultX={posX} 
 					defaultY={pathArray[element].actualY} 
-					moveX={Consts.TILE_PARALAX.leftRight} 
-					{...this.state} 
 					stageDimensions={Consts.STAGE_DIMENSIONS} 
 					key={posX} 
 					pathArrayId={element}
@@ -83,14 +83,41 @@ class TilesLayer extends Component {
 		});
 	}		
 
+	componentWillReceiveProps(nextProps) {
+        let newOffsetX = this.state.offsetX;
+		if (nextProps.keyEvent) {
+			switch(nextProps.keyEvent.code) {
+				case 'ArrowRight':
+                    newOffsetX = this.state.offsetX - Consts.TILE_PARALAX.leftRight;
+				break;
+
+				case 'ArrowLeft':
+                    newOffsetX = this.state.offsetX + Consts.TILE_PARALAX.leftRight;
+				break;
+
+				default:
+				break;
+			} 
+		}
+
+        if(newOffsetX > 0) {
+            newOffsetX = this.state.offsetX;
+        } else if(newOffsetX <= ((Consts.STAGE_DIMENSIONS.width - Consts.TILE_DIMENSIONS.width) * -1)) {
+            newOffsetX = this.state.offsetX;
+        }
+
+        this.setState({
+            offsetX: newOffsetX
+        });
+	}
+
     render() {
         return(
-            <Layer>
+            <Layer x={this.state.offsetX}>
                 {this.tilesGenerator()}
             </Layer>
         )
     }		
-
 }
 
 export default TilesLayer;
